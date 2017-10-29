@@ -37,7 +37,6 @@ def youtube_search(search_string):
         part="snippet",
         maxResults=1
     ).execute()
-
     # Return the Youtube URL based on the Youtube API Response
     return build_youtube_url(search_response.get("items", [])[0]["id"]["videoId"])
 

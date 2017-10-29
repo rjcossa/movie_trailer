@@ -34,15 +34,17 @@ def request_movie_info(movie_name):
     response = requests.request("GET", base_url+movie_name, data=payload)
 
     # Parse the JSON Information returned from the server
-    json_resp = json.loads(response.text)
 
-    # Return the JSON Information of the movie if any movie's are found
-    if json_resp['total_results'] >= 1:
-        return json_resp['results'][0]
+    if "total_results" in response.text:
+        json_resp = json.loads(response.text)
+        # Return the JSON Information of the movie if any movie's are found
+        if json_resp['total_results'] >= 1:
+            return json_resp['results'][0]
+        else:
+            # Return an Invalid Response if no movie's matching the criteria are found
+            return "NOT_FOUND"
     else:
-        # Return an Invalid Response if no movie's matching the criteria are found
-        return "NOT_FOUND"
-
+        return "ERROR_FOUND"
 
 """
 INPUT: Movie JSON Information
